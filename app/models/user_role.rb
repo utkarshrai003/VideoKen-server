@@ -2,7 +2,7 @@ class UserRole < ApplicationRecord
 
   # Associations
   belongs_to :user, :inverse_of => :user_role
-  belongs_to :role, :inverse_of => :user_role
+  belongs_to :role, :inverse_of => :user_roles
 
   # Validations
   validates :user, :presence => true
