@@ -3,6 +3,12 @@ class Api::V1::AppointmentsController < ApplicationController
   before_action :load_patient, only: [:create]
   before_action :load_physician, only: [:create]
 
+  # Endpoint to list down all the Appointments
+  def index
+    appointments = Appointment.all
+    render json { status: 200, data: AppointmentSerializer.new(user).as_json }
+  end
+  
   # Endpoint to create appointment between a patient and a physicians
   def create
     appointment = Appointment.make_between(@physician, @patient, appointment_params[:diseases])
