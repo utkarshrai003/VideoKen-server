@@ -6,14 +6,14 @@ class Api::V1::AppointmentsController < ApplicationController
   # Endpoint to list down all the Appointments
   def index
     appointments = Appointment.all
-    render json { status: 200, data: AppointmentSerializer.new(user).as_json }
+    render json: { status: 200, data: AppointmentSerializer.new(appointments).as_json }
   end
-  
+
   # Endpoint to create appointment between a patient and a physicians
   def create
     appointment = Appointment.make_between(@physician, @patient, appointment_params[:diseases])
     if appointment
-      render json: { status: 200, data: AppointmentSerializer.new(user).as_json }
+      render json: { status: 200, data: AppointmentSerializer.new(appointment).as_json }
     else
       render json: { status: 400, error: appointment.errors.full_messages }
     end
@@ -36,17 +36,17 @@ class Api::V1::AppointmentsController < ApplicationController
   def load_patient
     user_id = appointment_params[:patient_id]
     @patient = User.find(user_id) rescue nil
-    unless @patient || @patient.role.name.eql?('patient')
-      render json: {status: 400 , error: "No patient found with Id: #{patient_id}"}
-    }
+    unless @patient && @patient.role.name.eql?('patient')
+      render json: {status: 400 , error: "No patient found with Id: #{user_id}"}
+    end
   end
 
   # Method to validate Physician user
   def load_physician
     user_id = appointment_params[:physician_id]
     @physician = User.find(user_id) rescue nil
-    unless @physician || @physician.role.name.eql?('physician')
-      render json: {status: 400 , error: "No physician found with Id: #{physician_id}"}
-    }
+    unless @physician && @physician.role.name.eql?('physician')
+      render json: {  status: 400 , error: "No physician found with Id: #{user_id}"}
+    end
   end
 end
