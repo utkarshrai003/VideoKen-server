@@ -1,5 +1,8 @@
 class Role < ApplicationRecord
 
+  # Associations
+  has_many :user_roles, :inverse_of => :role, :dependent => :destroy
+
   # Validations
   validates :name, presence: true, uniqueness: true
 
