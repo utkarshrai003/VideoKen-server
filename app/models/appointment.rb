@@ -15,16 +15,18 @@ class Appointment < ApplicationRecord
 
   # Class Methods
   # Method to create an appointment between physician and patient
-  def self.make_between(physician, patient, diseases)
+  # Invoked as Appointment.schedule
+  def self.schedule(physician, patient, diseases)
     appointment = Appointment.new(physician: physician, patient: patient, diseases: diseases)
     unless Appointment.pending?(physician, patient)
-      appointment.save
+      appointment
     else
       raise "Appointment already made"
     end
   end
 
   # Method to check if a duplicate pending appointment exists
+  # Invoked as Appointment.pending?
   def self.pending?(physician, patient)
     Appointment.where(
       physician: physician,
