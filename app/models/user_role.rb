@@ -5,8 +5,7 @@ class UserRole < ApplicationRecord
   belongs_to :role, :inverse_of => :user_roles
 
   # Validations
-  validates :user, :presence => true
-  validates :role, :presence => true
+  validates :user, :role
   validates_uniqueness_of :user_id, :scope => :role_id
 
   begin
