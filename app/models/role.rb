@@ -1,7 +1,7 @@
 class Role < ApplicationRecord
 
   # Validations
-  validates :name, :presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
 
   # Instance Methods
   def underscored_name
@@ -11,5 +11,5 @@ class Role < ApplicationRecord
   def pluralized_name
     underscored_name.pluralize
   end
-  
+
 end
