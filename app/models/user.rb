@@ -27,8 +27,7 @@ class User < ApplicationRecord
   }
 
   # Validations
-  validates_presence_of :name, :email
-
-  # Callbacks
+  validates_presence_of :name, :email, :role
+  validates_uniqueness_of :email
 
 end
