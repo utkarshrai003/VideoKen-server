@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Api Routes
   api_routes = lambda do
     resources :users, only: [:create]
+    resources :appointments, only: [:index, :create]
   end
 
   # Route Namespacing
