@@ -4,8 +4,8 @@ class Api::V1::UsersController < ApplicationController
 
   # Endpoint to create patient and physician users
   def create
-    user = User.create(@user_info)
-    if user
+    user = User.new(@user_info)
+    if user.save && user.errors.empty?
       render json: { status: 200, data: UserSerializer.new(user).as_json }
     else
       render json: { status: 400, error: user.errors.full_messages }
