@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: 
+  number: 
+  age: 
+  email: 
+  specialization: 1
+
+two:
+  name: 
+  number: 
+  age: 
+  email: 
+  specialization: 1
