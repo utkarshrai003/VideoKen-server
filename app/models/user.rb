@@ -1,14 +1,5 @@
 class User < ApplicationRecord
 
-  # Enumeration for specialization
-  # Only for Physician Role
-  enum specialization: [
-    "Physician",
-    "Therapist",
-    "Nursing Assistant",
-    "Pharmacists"
-  ]
-
   # Associations
   has_one :user_role, {
     inverse_of: :user,
