@@ -37,7 +37,8 @@ class Api::V1::UsersController < ApplicationController
   # Method to verify and set the role for the user
   def set_role
     role = Role.find_by_name(user_params[:role]) rescue nil
-    role ? user_params_with_role(role) : (render json: { status: 400, error: "No such role" })
+    role ? user_params_with_role(role) :
+           (render json: { status: 400, error: "Mention a proper Role for User" })
   end
 
 end
