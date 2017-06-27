@@ -5,8 +5,10 @@ class Api::V1::AppointmentsController < ApplicationController
 
   # Endpoint to list down all the Appointments
   def index
-    appointments = Appointment.all
-    render json: { status: 200, data: AppointmentSerializer.new(appointments).as_json }
+    appointments = Appointment.includes(:patient, :physician).all
+    render json: { status: 200,
+                   data: ActiveModel::ArraySerializer.new(appointments, :each_serializer =>
+                         AppointmentSerializer).as_json }
   end
 
   # Endpoint to create appointment between a patient and a physicians
