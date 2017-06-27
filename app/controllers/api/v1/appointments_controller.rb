@@ -8,17 +8,15 @@ class Api::V1::AppointmentsController < ApplicationController
     appointments = Appointment.includes(:patient, :physician).all
     render json: { status: 200,
                    data: ActiveModel::ArraySerializer.new(appointments, :each_serializer =>
-                         AppointmentSerializer).as_json }
+                   AppointmentSerializer).as_json }
   end
 
   # Endpoint to create appointment between a patient and a physicians
   def create
-    appointment = Appointment.make_between(@physician, @patient, appointment_params[:diseases])
-    if appointment
-      render json: { status: 200, data: AppointmentSerializer.new(appointment).as_json }
-    else
-      render json: { status: 400, error: appointment.errors.full_messages }
-    end
+    appointment = Appointment.schedule(@physician, @patient, appointment_params[:diseases])
+    response = appointment.save ? { status: 200, data: AppointmentSerializer.new(appointment).as_json } :
+                                  { status: 400, error: appointment.errors.full_messages }
+    render json: response
   rescue Exception => e
     render json: { status: 400, error: e.message }
   end
