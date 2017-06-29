@@ -7,7 +7,7 @@ class Api::V1::AppointmentsController < ApplicationController
   def index
     appointments = Appointment.includes(:patient, :physician).all
     render json: { status: 200,
-                   data: ActiveModel::ArraySerializer.new(appointments, :each_serializer =>
+                   data: ActiveModel::Serializer::ArraySerializer.new(appointments, :each_serializer =>
                    AppointmentSerializer).as_json }
   end
 
@@ -25,7 +25,7 @@ class Api::V1::AppointmentsController < ApplicationController
 
   # Appointment strong params
   def appointment_params
-    params.require(:appointment).permit(
+    params.permit(
       :patient_id,
       :physician_id,
       :diseases
