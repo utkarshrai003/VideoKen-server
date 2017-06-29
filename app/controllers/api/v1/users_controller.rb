@@ -12,11 +12,23 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # Endpoint to return all the Patient users
+  def patients
+    patients = User.patients
+    render json: { status: 200, data: patients }
+  end
+
+  # Endpoint to return all the Physician users
+  def physicians
+    physicians = User.physicians
+    render json: { status: 200, data: physicians }
+  end
+
   private
 
   # Never trust the parameters from the Internet
   def user_params
-    params.require(:user).permit(
+    params.permit(
       :name,
       :number,
       :age,
