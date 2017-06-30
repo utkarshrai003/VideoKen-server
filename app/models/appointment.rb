@@ -13,6 +13,9 @@ class Appointment < ApplicationRecord
   # Validations
   validates_presence_of :patient, :physician
 
+  # Scopes
+  scope :recent_first, -> { order("created_at desc") }
+
   # Class Methods
   # Method to create an appointment between physician and patient
   # Invoked as Appointment.schedule
