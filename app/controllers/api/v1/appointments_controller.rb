@@ -7,7 +7,7 @@ class Api::V1::AppointmentsController < ApplicationController
   def index
     appointments = Appointment.includes(:patient, :physician).all
     render json: { status: 200,
-                   data: ActiveModel::Serializer::ArraySerializer.new(appointments, :each_serializer =>
+                   data: ActiveModel::Serializer::ArraySerializer.new(appointments.recent_first, :each_serializer =>
                    AppointmentSerializer).as_json }
   end
 
